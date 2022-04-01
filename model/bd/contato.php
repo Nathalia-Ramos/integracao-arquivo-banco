@@ -52,6 +52,7 @@ function insertContato($dadosContato)
 //funcao para realizar o update no banco de dados
 function updateContato()
 {
+
 }
 
 //funcao para excluir no banco de dados
@@ -76,7 +77,7 @@ function deleteContato($id)
 }
 
 //funcao para listar todos os contatos no BD
-function selectAllCOntatos()
+function selectAllContatos()
 {
     //abre a conexao com o banco de dados
     $conexao = conexaoMysql();
@@ -85,7 +86,7 @@ function selectAllCOntatos()
     $sql = 'select * from tblcontatos order by idcontato desc';
 
     //executa o script sql no BD e guarda o retorno dos dados se houver
-    $result = mysqli_query($conexao, $sql);                                  //quando mandados um script para o banco do tipo insert, delete, etc.
+    $result = mysqli_query($conexao, $sql); //quando mandados um script para o banco do tipo insert, delete, etc.
     // o script nao tera retorno, ao contrario do select que precisa retornal algo
 
     //valida se o BD retorna registros
@@ -113,3 +114,41 @@ function selectAllCOntatos()
         return $arrayDados;
     }
 }
+
+//Função para buscar um contato no BD através do id do registro
+function selectByIdContato($id){
+     
+    //abre a conexao com o banco de dados
+      $conexao = conexaoMysql();
+
+      //script para listar todos os dados do banco de dados 
+      $sql = "select * from tblcontatos where idcontato=".$id;
+  
+      //executa o script sql no BD e guarda o retorno dos dados se houver
+      $result = mysqli_query($conexao, $sql); //quando mandados um script para o banco do tipo insert, delete, etc.
+      // o script nao tera retorno, ao contrario do select que precisa retornal algo
+  
+      //valida se o BD retorna registros
+      if ($result) {
+  
+          //nesta repeticao estamos convertendo os dados do banco de daos do BD em um array ($rsDados),
+          // alem de o proprio while conseguir gerenciar a quantidade de vezes que dveria ser feita a repeticao
+          if ($rsDados = mysqli_fetch_assoc($result)) {
+              //cria um array com os dados do banco de dados 
+              $arrayDados = array(
+                  "id"         =>   $rsDados['idcontato'],
+                  "nome"       =>   $rsDados['nome'],
+                  "telefone"   =>   $rsDados['telefone'],
+                  "celular"    =>   $rsDados['celular'],
+                  "email"      =>   $rsDados['email'],
+                  "obs"        =>   $rsDados['obs']
+              );
+          }
+        }
+  
+          // Solicita o fechamento da conexão com o BD. Ação obrigatória (abrir e fechar) 
+          fecharConexaoMySql($conexao);
+  
+          return $arrayDados;
+}
+

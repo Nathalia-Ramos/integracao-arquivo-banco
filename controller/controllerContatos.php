@@ -46,12 +46,14 @@ function inserirContato($dadosContato)
 //função para receber dados da View e encaminhar para a model (Atualizar)
 function atualizarContato()
 {
+    
 }
 
 
 //função para realizar a exclusão de um contato 
 function excluirContato($id)
 {
+
     // Validação para verificar se id contem um numero valido
     if ($id != 0 && !empty($id) && is_numeric($id)) {
 
@@ -81,7 +83,7 @@ function listarContato()
     require_once('model/bd/contato.php');
 
     //chama a funcao que vai buscar os dados no bd
-    $dados = selectAllCOntatos();
+    $dados = selectAllContatos();
 
     //
     if (!empty($dados))
@@ -89,3 +91,33 @@ function listarContato()
     else
         return false;
 }
+
+//Função para buscar um contato através do id do registro 
+function buscarContato($id)
+{   
+    //Validação para verificar se id contém um número válido
+    if ($id != 0 && !empty($id) && is_numeric($id)){
+
+        require_once('model/bd/contato.php');
+
+    
+        //Chama a função na model que vai buscar no BD
+        $dados = selectByIdContato($id);
+
+        //Valida se existem dados para serem desenvolvidos
+        if(!empty($dados)){
+            return $dados;
+        }else{
+            return false;
+        }
+        
+    }else
+        return array(
+            'idErro' => 4,
+            'message' => 'Não é possível buscar um registro sem informar um Id válido'
+        );
+
+
+
+}
+?>

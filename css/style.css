@@ -32,7 +32,7 @@ body, h1, p{
 #cadastroTitulo{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-color: dodgerblue;
+    background-color: maroon;
     width: auto;
     height: 120px;
     text-align: center;
@@ -99,14 +99,14 @@ input[type=email]:hover{
 .enviar input{
     width: 150px;
     height: 50px;
-    background-color: dodgerblue;
+    background-color: maroon;
     color: white;
     margin-top: 30px;
     font-size: 1.2em;
 }
 
 .enviar input:hover{
-    background-color: rgb(2, 131, 45);
+    background-color: lightslategray;
     cursor: pointer;
     transform: scale(1.1);
     transition: 1s;
@@ -140,7 +140,7 @@ input[type=email]:hover{
 #tblTitulo{
     width: 100%;
     height: 30px;
-    background-color: dodgerblue;
+    background-color: maroon;
     color: white;
     text-align: center;
     font-size: 1.6em;

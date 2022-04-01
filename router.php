@@ -9,7 +9,7 @@
  * Autor: Mariana
  * Data: 04/03/2022
  * Versão: 1.0
- *******************************************/
+ *******************************************************************************/
 
 
 $action = (string) null;
@@ -52,9 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                         window.history.back(); 
                    </script>");
             } elseif ($action == 'DELETAR') {
-                //Recebe o id do registro que devera ser excluido, e foi enviado pela url no link da imagem do excluir que foi acionado na index
-                $idcontato = $_GET['id'];
 
+                //Recebe o id do registro que devera ser excluido, 
+                //e foi enviado pela url no link da imagem do excluir que foi acionado na index
+                $idcontato = $_GET['id'];
+                
+                //Chama a função de excluir na controller
                 $resposta = excluirContato($idcontato);
 
                 if (is_bool($resposta)) {
@@ -68,10 +71,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     echo ("<script> 
                         alert('" . $resposta['message'] . "');
                         window.history.back(); 
-                   </script>");
-                }
-            }
+                          </script>");
+                }  
+            }elseif($action == 'BUSCAR'){
+                //Recebe o id do registro que devera ser editado, 
+                //e foi enviado pela url no link da imagem do editar que foi acionado na index
+                $idcontato = $_GET['id'];
+                
+                //Chama a função de excluir na controller
+                $dados = buscarContato($idcontato);
 
+                //Ativa a utilização de variaveis de sessão no servidor
+               session_start();
+
+                // Guarda em variavel de sessão os dados que o BD retornou para a busca do id
+                    //Obs - essa variavel será utilizada na index.php, 
+                      //para colocar os dados nas caixas de texto
+               $_SESSION['dadosContato'] = $dados;
+
+                //Utilizando o header tambem poderemos chamar a index.php, 
+                    //porem haverá uma ação de carregamento no navegador(piscando a tela novamente)
+               
+                 //header('location: index.php);
+
+                //Utilizando o require iremos apenas importar a tela da index, 
+                   //assim nao havendo um novo carregamento da pagina
+               require_once('index.php');
+
+            }
+                
             break;
     }
 }
