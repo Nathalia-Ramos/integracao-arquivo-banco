@@ -4,7 +4,7 @@
  * Objetivo: Arquivo responsável pela manipulação de dados de contato 
  * Obs: Este arquivo fará a ponte entre a View e a Model
  * 
- * Autor: Mariana
+ * Autor: Nathalia
  * Data: 04/03/2022
  * Versão: 1.0
  *******************************************************************/
@@ -44,11 +44,54 @@ function inserirContato($dadosContato)
     }
 }
 //função para receber dados da View e encaminhar para a model (Atualizar)
-function atualizarContato()
+function atualizarContato($dadosContato, $id)
 {
-    
-}
 
+    //validacao para verificar se o objeto esta vazio
+    if (!empty($dadosContato)) {
+
+        //validacao de caixa vazia dos elementos: nome, celular e email pois são obrugatorias no BD
+        if (!empty($dadosContato['txtNome']) && !empty($dadosContato['txtCelular']) && !empty($dadosContato['txtEmail'])) {
+
+
+            //Validação para garantir que o id seja válido
+            if (!empty($id) && $id != 0 && is_numeric($id)) {
+                //criacao do array de dados que sera encaminhado para a model para inserir no BD,
+                // é importante criar esse array conforme a necessidade de manipulação do BD
+                //obs: criar as chaves do array conforme os nomes dos atributos do banco de dados 
+                $arrayDados = array(
+                    "id"       => $id,
+                    "nome"     => $dadosContato['txtNome'],
+                    "telefone" => $dadosContato['txtTelefone'],
+                    "celular"  => $dadosContato['txtCelular'],
+                    "email"    => $dadosContato['txtEmail'],
+                    "obs"      => $dadosContato['txtObs'],
+                );
+
+                //import do arquivo de modelagem para manipular o BD
+                require_once('model/bd/contato.php');
+
+                //chama a funcao que fará o update no banco de dados (essa funcao esta na model)
+                if (updateContato($arrayDados))
+                    return true;
+                else
+                    return array('idErro' => 1, 'message' => 'Não foi possível atualizar os dados no banco de dados');
+             }else{ 
+                    return array(
+                        'idErro' => 4,
+                        'message' => 'Não é possível atualizar um registro sem informar um Id válido');
+                }     
+         }else
+             return array(
+                'idErro' => 2,
+                'message' => 'Existem campos obrigatórios que não foram preenchidos'
+                );
+            
+            
+    }
+
+
+}
 
 //função para realizar a exclusão de um contato 
 function excluirContato($id)
@@ -94,30 +137,25 @@ function listarContato()
 
 //Função para buscar um contato através do id do registro 
 function buscarContato($id)
-{   
+{
     //Validação para verificar se id contém um número válido
-    if ($id != 0 && !empty($id) && is_numeric($id)){
+    if ($id != 0 && !empty($id) && is_numeric($id)) {
 
         require_once('model/bd/contato.php');
 
-    
+
         //Chama a função na model que vai buscar no BD
         $dados = selectByIdContato($id);
 
         //Valida se existem dados para serem desenvolvidos
-        if(!empty($dados)){
+        if (!empty($dados)) {
             return $dados;
-        }else{
+        } else {
             return false;
         }
-        
-    }else
+    } else
         return array(
             'idErro' => 4,
             'message' => 'Não é possível buscar um registro sem informar um Id válido'
         );
-
-
-
 }
-?>

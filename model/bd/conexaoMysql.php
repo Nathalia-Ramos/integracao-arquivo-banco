@@ -2,7 +2,7 @@
 
 /*********************************************************************
  * Objetivo: arquivo para criar a conexão com o banco de dados MySQL
- * Autor: Mariana
+ * Autor: Nathalia
  * Data: 25/02/2022
  * Versão: 1.0
  *********************************************************************/
@@ -21,7 +21,7 @@ function conexaoMysql()
 
     $conexao = array();
 
-    //Se a conecao fror estabelecida com o Banco de dados, vamos ter um array de dados sobre a conexao
+    //Se a conecao for estabelecida com o Banco de dados, vamos ter um array de dados sobre a conexao
     $conexao = mysqli_connect(SERVER, USER, PASSWORD, DATABASE);
 
     //Validação para verificar se a conexao foi realizada com sucesso

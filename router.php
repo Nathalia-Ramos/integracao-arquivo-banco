@@ -6,7 +6,7 @@
  *            Esse arquivo será responsável por encaminhar as solicitações para 
  *            a controller  
  * 
- * Autor: Mariana
+ * Autor: Nathalia
  * Data: 04/03/2022
  * Versão: 1.0
  *******************************************************************************/
@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                         alert('" . $resposta['message'] . "');
                         window.history.back(); 
                    </script>");
+
             } elseif ($action == 'DELETAR') {
 
                 //Recebe o id do registro que devera ser excluido, 
@@ -98,6 +99,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                    //assim nao havendo um novo carregamento da pagina
                require_once('index.php');
 
+            }elseif($action == 'EDITAR'){
+
+                //Recebe o id que foi encaminhado no action do form pela URL
+                $idcontato = $_GET ['id'];
+                
+                //Chama a função de editar na controller
+                $resposta = atualizarContato($_POST, $idcontato);    
+
+                //valida o tipo de dado que a controller retorna
+                if (is_bool($resposta)) //se for booleano
+                {
+                    //verificar se o retorno foi verdadeiro
+                    if ($resposta)
+                        echo ("<script> 
+                                alert('Registro atualizado com sucesso!');
+                                window.location.href = 'index.php'; 
+                            </script>"); // essa funcao retorna a página inicial apos a execuca
+                } elseif (is_array($resposta))
+
+                    echo ("<script> 
+                        alert('" . $resposta['message'] . "');
+                        window.history.back(); 
+                   </script>");
             }
                 
             break;
