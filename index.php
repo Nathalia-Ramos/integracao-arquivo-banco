@@ -52,7 +52,9 @@
 
         </div>
         <div id="cadastroInformacoes">
-            <form action="<?=$form?>" name="frmCadastro" method="post">
+            <form action="<?=$form?>" name="frmCadastro" method="post" enctype="multipart/form-data"> <!--"multipart/form-data" -
+                                                                                                            essa opção é obrigatória para enviar arquivos do formulario
+                                                                                                            para o servidor  --->
                 <div class="campos">
                     <div class="cadastroInformacoesPessoais">
                         <label> Nome: </label>
@@ -91,6 +93,18 @@
                                                                                                             de variavel indefinida --->
                     </div>
                 </div>
+
+                <!--------- Fazendo upload de imagens   -------->
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <label> Escolha um arquivo</label>
+                    </div>
+                    <div class="cadastroEntradaDeDados">
+                        <input type="file" name="fleFoto" accept=".jpg, .png, .jpeg, .gif"> <!--- esse accept faz voce escolher qual 
+                                                                                                    arquivo pode fazer o upload--->
+                </div>
+            </div>
+
                 <div class="campos">
                     <div class="cadastroInformacoesPessoais">
                         <label> Observações: </label>
@@ -100,6 +114,9 @@
                                                                                                                  de variavel indefinida --->
                     </div>
                 </div>
+
+
+
                 <div class="enviar">
                     <div class="enviar">
                         <input type="submit" name="btnEnviar" value="Salvar">

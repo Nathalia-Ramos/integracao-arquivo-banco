@@ -7,7 +7,7 @@
  * Versão: 1.0
  *********************************************************************/
 
-// Constantes para estabelecer a conexao com o banco de dados (local do banco, Ususário, Senha e database)
+// Constantes para estabelecer a conexao com o banco de dados (local do banco, Usuário, Senha e database)
 const SERVER = 'localhost';
 const USER = 'root';
 const PASSWORD = 'bcd127';
@@ -21,7 +21,7 @@ function conexaoMysql()
 
     $conexao = array();
 
-    //Se a conecao for estabelecida com o Banco de dados, vamos ter um array de dados sobre a conexao
+    //Se a conexao for estabelecida com o Banco de dados, vamos ter um array de dados sobre a conexao
     $conexao = mysqli_connect(SERVER, USER, PASSWORD, DATABASE);
 
     //Validação para verificar se a conexao foi realizada com sucesso

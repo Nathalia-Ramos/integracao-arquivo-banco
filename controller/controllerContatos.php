@@ -10,13 +10,21 @@
  *******************************************************************/
 
 //função para receber dados da View e encaminhar para a model (Inserir)
-function inserirContato($dadosContato)
+function inserirContato($dadosContato, $file)
 {
     //validacao para verificar se o objeto esta vazio
     if (!empty($dadosContato)) {
 
         //validacao de caixa vazia dos elementos: nome, celular e email pois são obrugatorias no BD
-        if (!empty($dadosContato['txtNome']) && !empty($dadosContato['txtCelular']) && !empty($dadosContato['txtEmail'])) {
+        if (!empty($dadosContato['txtNome']) && !empty($dadosContato['txtCelular']) && !empty($dadosContato['txtEmail'])) 
+        {  
+            if($file != null)
+            {
+                require_once('modulo/upload.php');
+                $resultado = uploadFile($file['fleFoto']);
+                echo ($resultado);
+                die;
+            }
             //criacao do array de dados que sera encaminhado para a model para inserir no BD,
             // é importante criar esse array conforme a necessidade de manipulação do BD
             //obs: criar as chaves do array conforme os nomes dos atributos do banco de dados 
@@ -32,7 +40,7 @@ function inserirContato($dadosContato)
             require_once('model/bd/contato.php');
 
             //chama a funcao que fara o insert no banco de dados (essa funcao esta na model)
-            if (insertContato($arrayDados))
+            if (inserirContato($arrayDados))
                 return true;
             else
                 return array('idErro' => 1, 'message' => 'Não foi possível inserir os dados no banco de dados');
