@@ -151,6 +151,8 @@
                     <td class="tblColunas registros"><?= $item['nome'] ?></td>
                     <td class="tblColunas registros"><?= $item['celular'] ?></td>
                     <td class="tblColunas registros"><?= $item['email'] ?></td>
+                    <td class="tblColunas registros"><img src="arquivos/<?= $item['foto']?>" class="foto"></td>
+
 
                     <td class="tblColunas registros">
                         <a href="router.php?component=contatos&action=buscar&id=<?= $item['id']?>">

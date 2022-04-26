@@ -11,36 +11,49 @@
 
 //função para receber dados da View e encaminhar para a model (Inserir)
 function inserirContato($dadosContato, $file)
-{
+{   
+    //Declaramos essa variavel para 
+    $nomeFoto = (string) null;
+
     //validacao para verificar se o objeto esta vazio
     if (!empty($dadosContato)) {
 
         //validacao de caixa vazia dos elementos: nome, celular e email pois são obrugatorias no BD
         if (!empty($dadosContato['txtNome']) && !empty($dadosContato['txtCelular']) && !empty($dadosContato['txtEmail'])) 
         {  
+            //Validação para idenficar se chegou um arquivo para uploud
             if($file != null)
-            {
+            {   
+                //import da função de uploud
                 require_once('modulo/upload.php');
-                $resultado = uploadFile($file['fleFoto']);
-                echo ($resultado);
-                die;
+                //Chama a função de uploud
+                $nomeFoto = uploadFile($file['fleFoto']);
+
+                if(is_array($nomeFoto))
+                {
+                    //Caso aconteça algum erro no processo uploud, a função irá retornar um array 
+                    //com a possivel mensagem de erro. 
+                    //Esse array será retornado para a router e ela irá exibir para o usuário
+                    return $nomeFoto;
+                }
             }
             //criacao do array de dados que sera encaminhado para a model para inserir no BD,
             // é importante criar esse array conforme a necessidade de manipulação do BD
             //obs: criar as chaves do array conforme os nomes dos atributos do banco de dados 
             $arrayDados = array(
-                "nome" => $dadosContato['txtNome'],
+                "nome"     => $dadosContato['txtNome'],
                 "telefone" => $dadosContato['txtTelefone'],
-                "celular" => $dadosContato['txtCelular'],
-                "email" => $dadosContato['txtEmail'],
-                "obs" => $dadosContato['txtObs'],
+                "celular"  => $dadosContato['txtCelular'],
+                "email"    => $dadosContato['txtEmail'],
+                "obs"      => $dadosContato['txtObs'],
+                "foto"     => $nomeFoto,
             );
 
             //import do arquivo de modelagem para manipular o BD
             require_once('model/bd/contato.php');
 
             //chama a funcao que fara o insert no banco de dados (essa funcao esta na model)
-            if (inserirContato($arrayDados))
+            if (insertContato($arrayDados))
                 return true;
             else
                 return array('idErro' => 1, 'message' => 'Não foi possível inserir os dados no banco de dados');

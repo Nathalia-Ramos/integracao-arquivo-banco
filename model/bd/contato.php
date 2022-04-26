@@ -25,13 +25,16 @@ function insertContato($dadosContato)
                 telefone,
                 celular,
                 email,
+                foto,
                 obs)
             values
                 ('" . $dadosContato['nome'] . "',
                  '" . $dadosContato['telefone'] . "',
                  '" . $dadosContato['celular'] . "',
                  '" . $dadosContato['email'] . "',
+                 '" . $dadosContato['email'] . "',
                  '" . $dadosContato['obs'] . "');";
+                 
 
     //executa o script no BD
 
@@ -64,7 +67,7 @@ function updateContato($dadosContato)
                 celular  =    '" . $dadosContato['celular'] . "',
                 email    =    '" . $dadosContato['email'] . "',
                 obs      =    '" . $dadosContato['obs'] . "'
-            where idcontato = "  .   $dadosContato['id']; 
+            where idcontato = "  . $dadosContato['id']; 
             //o Where restringe onde pode atualizar
         
     //executa o script no BD
@@ -131,6 +134,7 @@ function selectAllContatos()
                 "telefone"   =>   $rsDados['telefone'],
                 "celular"    =>   $rsDados['celular'],
                 "email"      =>   $rsDados['email'],
+                "foto"      =>   $rsDados['foto'],
                 "obs"        =>   $rsDados['obs']
             );
             $cont++;
