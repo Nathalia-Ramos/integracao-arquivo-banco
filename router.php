@@ -66,9 +66,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                 //Recebe o id do registro que devera ser excluido, 
                 //e foi enviado pela url no link da imagem do excluir que foi acionado na index
                 $idcontato = $_GET['id'];
+                $foto = $_GET['foto'];
+
+                //Criamos um array para encaminhar os valores do id e da foto para a controller
+                $arrayDados = array (
+
+                    "id"   => $idcontato,
+                    "foto" => $foto
+
+
+
+                )
                 
                 //Chama a função de excluir na controller
-                $resposta = excluirContato($idcontato);
+                $resposta = excluirContato($arrayDados);
 
                 if (is_bool($resposta)) {
                     if ($resposta) {
@@ -108,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                    //assim nao havendo um novo carregamento da pagina
                require_once('index.php');
 
-            }elseif($action == 'EDITAR'){
+            }elseif($action == 'EDITAR'){       
 
                 //Recebe o id que foi encaminhado no action do form pela URL
                 $idcontato = $_GET ['id'];
@@ -124,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                         echo ("<script> 
                                 alert('Registro atualizado com sucesso!');
                                 window.location.href = 'index.php'; 
-                            </script>"); // essa funcao retorna a página inicial apos a execuca
+                            </script>"); // essa funcao retorna a página inicial apos a executa
                 } elseif (is_array($resposta))
 
                     echo ("<script> 

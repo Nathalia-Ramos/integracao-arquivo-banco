@@ -6,18 +6,29 @@
     //Nas condições abaixo mudamos o action dessa variabel para a ação de editar
 
     $form = (string)  "router.php?component=contatos&action=inserir";
+
+    //Variavel para carregar o nome da foto do banco de dados 
+    $foto     = (string) null;
+
+    //Variavel para ser utilizada no carregar dos estados(opção de editar)
+    $idestado = (string) null;
+
+
     //Valida se a utilização de varival de sessao está ativa no servidor
     if(session_status())
     {
 
    //Valida se a variavel de sessão dadosContato não está vazia
         if(!empty($_SESSION['dadosContato'])){
-            $id       =  $_SESSION['dadosContato']['id'];
-            $nome     =  $_SESSION['dadosContato']['nome'];
-            $telefone =  $_SESSION['dadosContato']['telefone'];
-            $celular  =  $_SESSION['dadosContato']['celular'];
-            $email    =  $_SESSION['dadosContato']['email'];
-            $obs      =  $_SESSION['dadosContato']['obs'];
+            $id        =  $_SESSION['dadosContato']['id'];
+            $nome      =  $_SESSION['dadosContato']['nome'];
+            $telefone  =  $_SESSION['dadosContato']['telefone'];
+            $celular   =  $_SESSION['dadosContato']['celular'];
+            $email     =  $_SESSION['dadosContato']['email'];
+            $obs       =  $_SESSION['dadosContato']['obs'];
+            $foto      =  $_SESSION['dadosContato']['foto'];
+            $idestado  =  $_SESSION['dadosContato']['idestado'];
+
 
             
             // Mudamos a ação do form para editar o registro no click do botão salvar
@@ -28,8 +39,6 @@
         }
 
     }
-             
-
 ?>
 
 <!DOCTYPE>
@@ -61,6 +70,33 @@
                     </div>
                     <div class="cadastroEntradaDeDados">
                         <input type="text" name="txtNome" value="<?= isset($nome)?$nome:null?>" placeholder="Digite seu Nome" maxlength="100">
+                    </div>
+                </div>
+
+
+            
+                <div class="campos">
+                    <div class="cadastroInformacoesPessoais">
+                        <label> Estado: </label>
+                    </div>
+                    <div class="cadastroEntradaDeDados">
+                        <select name="sltEstado">
+                            <option value="">Selecione um item</option>
+                            <?php 
+                            
+                            require_once('controller/controllerEstado.php');
+
+                            //Chama a função para carregar todas as funções do banco
+                            $lisEstado = listarEstado();
+                            foreach ($lisEstado as $item)
+                            {
+                                ?>
+                                   <option <?=$idestado==$item['idestado']?'selected':null?> value="<?=$item['idestado']?>"><?=$item['nome']?></option>
+                                <?php 
+                            }
+                            ?>
+                          
+                        </select>
                     </div>
                 </div>
 
@@ -144,28 +180,32 @@
             require_once('controller/controllerContatos.php');
             // Chama a função que retorna os dados de contatos
             $listContato = listarContato();
+            { 
             // Estrutura de repetição para retornar os dados do array e printar na tela
             foreach ($listContato as $item) {
+               
+                $foto = $item['foto']; //variavel para carregar a foto no banco de dados
             ?>
                 <tr id="tblLinhas">
                     <td class="tblColunas registros"><?= $item['nome'] ?></td>
                     <td class="tblColunas registros"><?= $item['celular'] ?></td>
                     <td class="tblColunas registros"><?= $item['email'] ?></td>
-                    <td class="tblColunas registros"><img src="arquivos/<?= $item['foto']?>" class="foto"></td>
+                    <td class="tblColunas registros"><img src="arquivos/<?=$foto?>" class="foto"></td>
 
 
                     <td class="tblColunas registros">
-                        <a href="router.php?component=contatos&action=buscar&id=<?= $item['id']?>">
+                        <a href="router.php?component=contatos&action=buscar&id=<?=$item['id']?>">
                             <img src="img/edit.png" alt="Editar" title="Editar" class="editar">
                         </a>    
                        
-                        <a onClick="return confirm('Tem certeza que deseja excluir?');" href="router.php?component=contatos&action=deletar&id=<?= $item['id'] ?>">
+                        <a onClick="return confirm('Tem certeza que deseja excluir?');" href="router.php?component=contatos&action=deletar&id=<?= $item['id']?>&foto=<?=$foto?>">
                             <img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir">
                         </a>
                         <img src="img/search.png" alt="Visualizar" title="Visualizar" class="pesquisar">
                     </td>
                 </tr>
             <?php
+                }
             }
             ?>
         </table>

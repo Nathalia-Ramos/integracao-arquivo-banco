@@ -26,13 +26,15 @@ function insertContato($dadosContato)
                 celular,
                 email,
                 foto,
-                obs)
+                obs,
+                idestado)
             values
-                ('" . $dadosContato['nome'] . "',
-                 '" . $dadosContato['telefone'] . "',
-                 '" . $dadosContato['celular'] . "',
-                 '" . $dadosContato['email'] . "',
-                 '" . $dadosContato['email'] . "',
+                ('" . $dadosContato['nome']. "',
+                 '" . $dadosContato['telefone']. "',
+                 '" . $dadosContato['celular']. "',
+                 '" . $dadosContato['email']. "',
+                 '" . $dadosContato['email']. "',
+                 '" . $dadosContato['idEstado']. "',
                  '" . $dadosContato['obs'] . "');";
                  
 
@@ -66,7 +68,8 @@ function updateContato($dadosContato)
                 telefone =    '" . $dadosContato['telefone'] . "',
                 celular  =    '" . $dadosContato['celular'] . "',
                 email    =    '" . $dadosContato['email'] . "',
-                obs      =    '" . $dadosContato['obs'] . "'
+                obs      =    '" . $dadosContato['obs'] . "',
+                idestado =    '" . $dadosContato['idestado'] . "'
             where idcontato = "  . $dadosContato['id']; 
             //o Where restringe onde pode atualizar
         
@@ -134,8 +137,9 @@ function selectAllContatos()
                 "telefone"   =>   $rsDados['telefone'],
                 "celular"    =>   $rsDados['celular'],
                 "email"      =>   $rsDados['email'],
-                "foto"      =>   $rsDados['foto'],
-                "obs"        =>   $rsDados['obs']
+                "foto"       =>   $rsDados['foto'],
+                "obs"        =>   $rsDados['obs'],
+                "idestado"   =>   $rsDados['idestado']
             );
             $cont++;
         }
@@ -173,7 +177,10 @@ function selectByIdContato($id){
                   "telefone"   =>   $rsDados['telefone'],
                   "celular"    =>   $rsDados['celular'],
                   "email"      =>   $rsDados['email'],
-                  "obs"        =>   $rsDados['obs']
+                  "obs"        =>   $rsDados['obs'],
+                  "foto"       =>   $rsDados['foto'],
+                  "idestado"   =>   $rsDados['idestado']
+
               );
           }
         }
@@ -181,6 +188,9 @@ function selectByIdContato($id){
           // Solicita o fechamento da conexão com o BD. Ação obrigatória (abrir e fechar) 
           fecharConexaoMySql($conexao);
   
-          return $arrayDados;
+          if(isset($arrayDados))
+             return $arrayDados;
+          else 
+             return false;   
 }
 

@@ -19,10 +19,10 @@ function inserirContato($dadosContato, $file)
     if (!empty($dadosContato)) {
 
         //validacao de caixa vazia dos elementos: nome, celular e email pois são obrugatorias no BD
-        if (!empty($dadosContato['txtNome']) && !empty($dadosContato['txtCelular']) && !empty($dadosContato['txtEmail'])) 
+        if (!empty($dadosContato['txtNome']) && !empty($dadosContato['txtCelular']) && !empty($dadosContato['txtEmail']) && ($dadosContato['sltEstado'])) 
         {  
             //Validação para idenficar se chegou um arquivo para uploud
-            if($file != null)
+            if($file['fleFoto']['name'] != null)
             {   
                 //import da função de uploud
                 require_once('modulo/upload.php');
@@ -45,8 +45,9 @@ function inserirContato($dadosContato, $file)
                 "telefone" => $dadosContato['txtTelefone'],
                 "celular"  => $dadosContato['txtCelular'],
                 "email"    => $dadosContato['txtEmail'],
-                "obs"      => $dadosContato['txtObs'],
+                "obs"      => $dadosContato['txtObs'],         
                 "foto"     => $nomeFoto,
+                "idestado" => $dadosContato['sltEstado']
             );
 
             //import do arquivo de modelagem para manipular o BD
@@ -67,6 +68,9 @@ function inserirContato($dadosContato, $file)
 //função para receber dados da View e encaminhar para a model (Atualizar)
 function atualizarContato($dadosContato, $id)
 {
+    $statusUplouad = (boolean) false;
+
+    
 
     //validacao para verificar se o objeto esta vazio
     if (!empty($dadosContato)) {
@@ -87,6 +91,8 @@ function atualizarContato($dadosContato, $id)
                     "celular"  => $dadosContato['txtCelular'],
                     "email"    => $dadosContato['txtEmail'],
                     "obs"      => $dadosContato['txtObs'],
+                    "idestado" => $dadosContato['sltestado']
+
                 );
 
                 //import do arquivo de modelagem para manipular o BD
@@ -102,11 +108,11 @@ function atualizarContato($dadosContato, $id)
                         'idErro' => 4,
                         'message' => 'Não é possível atualizar um registro sem informar um Id válido');
                 }     
-         }else
-             return array(
-                'idErro' => 2,
-                'message' => 'Existem campos obrigatórios que não foram preenchidos'
-                );
+            }else
+                return array(
+                    'idErro' => 2,
+                    'message' => 'Existem campos obrigatórios que não foram preenchidos'
+                    );
             
             
     }
@@ -115,18 +121,33 @@ function atualizarContato($dadosContato, $id)
 }
 
 //função para realizar a exclusão de um contato 
-function excluirContato($id)
+function excluirContato($arrayDados)
 {
+    //recebe o id do registro que será excluido
+    $id = $arrayDados['id'];
+    $foto = $arrayDados['foto'];
 
     // Validação para verificar se id contem um numero valido
     if ($id != 0 && !empty($id) && is_numeric($id)) {
 
         // Import do arquivo de contato
         require_once('model/bd/contato.php');
+        require_once ('modollo/config.php');
 
         // Chama a função da model e valida se o retorno foi verdadeiro ou falso
         if (deleteContato($id))
+        {   
+            //unlink -> função para apagar um arquivo do diretorio
+            //permite apagar a foto fisicamente do diretorio no servidor 
+            unlink(DIRETORIO_FILE_UPLOAD.$foto);
             return true;
+        else
+        return array(
+            'idErro' => 5,
+            'message' => 'O registro do banco de Dados foi excluído com sucesso, 
+            porém a imagem não foi excluída no diretório do servidor'
+        );
+        }
         else
             return array(
                 'idErro' => 3,
