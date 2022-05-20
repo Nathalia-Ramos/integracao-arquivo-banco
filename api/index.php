@@ -29,7 +29,7 @@
 
     //Verifica qual a API será encaminhada a requisição
     switch (strtoupper($url[0])){
-        case 'value':
+        case 'CONTATOS':
              require_once('contatosApi/index.php');
         break;
     }

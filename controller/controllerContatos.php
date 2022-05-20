@@ -51,7 +51,7 @@ function inserirContato($dadosContato, $file)
             );
 
             //import do arquivo de modelagem para manipular o BD
-            require_once('model/bd/contato.php');
+            require_once(SRC.'model/bd/contato.php');
 
             //chama a funcao que fara o insert no banco de dados (essa funcao esta na model)
             if (insertContato($arrayDados))
@@ -165,7 +165,7 @@ function excluirContato($arrayDados)
 function listarContato()
 {
     //import do arquivo que vai buscar os dados
-    require_once('model/bd/contato.php');
+    require_once(SRC.'model/bd/contato.php'); 
 
     //chama a funcao que vai buscar os dados no bd
     $dados = selectAllContatos();
