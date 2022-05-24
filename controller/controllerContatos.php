@@ -131,22 +131,25 @@ function excluirContato($arrayDados)
     if ($id != 0 && !empty($id) && is_numeric($id)) {
 
         // Import do arquivo de contato
-        require_once('model/bd/contato.php');
-        require_once ('modollo/config.php');
+        require_once(SRC.'model/bd/contato.php');
+      //  require_once ('modollo/config.php');
 
         // Chama a função da model e valida se o retorno foi verdadeiro ou falso
         if (deleteContato($id))
         {   
             //unlink -> função para apagar um arquivo do diretorio
             //permite apagar a foto fisicamente do diretorio no servidor 
-            unlink(DIRETORIO_FILE_UPLOAD.$foto);
+            unlink(SRC.DIRETORIO_FILE_UPLOAD.$foto);
             return true;
         else
-        return array(
+        {
+             return array(
             'idErro' => 5,
             'message' => 'O registro do banco de Dados foi excluído com sucesso, 
             porém a imagem não foi excluída no diretório do servidor'
         );
+        }
+       
         }
         else
             return array(
@@ -183,7 +186,7 @@ function buscarContato($id)
     //Validação para verificar se id contém um número válido
     if ($id != 0 && !empty($id) && is_numeric($id)) {
 
-        require_once('model/bd/contato.php');
+        require_once(SRC.'model/bd/contato.php');
 
 
         //Chama a função na model que vai buscar no BD

@@ -1,7 +1,7 @@
 <?php
 
 /*********************************************************************
- * Objetivo: arquivo responsavel por manipular os dados dentro do BD(insert, select, update, delete)
+ * Objetivo: arquivo responsável por manipular os dados dentro do BD(insert, select, update, delete)
  * Autor: Nathalia
  * Data: 11/03/2022
  * Versão: 1.0
@@ -102,6 +102,7 @@ function deleteContato($id)
     if (mysqli_query($conexao, $sql)) {
         // Valida se o BD teve sucesso na conexao do script
         if (mysqli_affected_rows($conexao))
+
             $statusResposta = true;
     }
 
@@ -148,6 +149,11 @@ function selectAllContatos()
         fecharConexaoMySql($conexao);
 
         return $arrayDados;
+
+        if(isset($arrayDados))
+           return $arrayDados;
+        else 
+          return false;   
     }
 }
 
