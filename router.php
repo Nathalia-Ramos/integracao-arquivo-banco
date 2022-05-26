@@ -34,13 +34,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
             //validacao para identificar o tipo de acao que sera realizada
             if ($action == 'INSERIR') {
 
+                //Validação para tratar se a imagem existe na chegada dos dados do HTML
                 if(isset($_FILES) && !empty ($_FILES))
                 {
+                    $arrayDados = array(
+                                    $_POST,
+                                    "file" => $_FILES
+                                  );
+
+
                    //chama a funcao de inserir na controller
-                    $resposta = inserirContato($_POST, $_FILES);
+                    $resposta = inserirContato($arrayDados);
                 
                 }else{
-                    $resposta = inserirContato($_POST, null);
+                    $arrayDados = array(
+                        $_POST,
+                        "file" => null
+                      );
+                    $resposta = inserirContato($arrayDados);
                 }
 
              

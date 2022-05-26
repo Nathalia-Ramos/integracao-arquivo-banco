@@ -69,7 +69,7 @@
                         <label> Nome: </label>
                     </div>
                     <div class="cadastroEntradaDeDados">
-                        <input type="text" name="txtNome" value="<?= isset($nome)?$nome:null?>" placeholder="Digite seu Nome" maxlength="100">
+                        <input type="text" name="Nome" value="<?= isset($nome)?$nome:null?>" placeholder="Digite seu Nome" maxlength="100">
                     </div>
                 </div>
 
@@ -80,7 +80,7 @@
                         <label> Estado: </label>
                     </div>
                     <div class="cadastroEntradaDeDados">
-                        <select name="sltEstado">
+                        <select name="Estado">
                             <option value="">Selecione um item</option>
                             <?php 
                             
@@ -105,7 +105,7 @@
                         <label> Telefone: </label>
                     </div>
                     <div class="cadastroEntradaDeDados"> 
-                        <input type="tel" name="txtTelefone" value="<?= isset($telefone)?$telefone: null?> "><!--Esse isset (if) faz sumir um erro 
+                        <input type="tel" name="Telefone" value="<?= isset($telefone)?$telefone: null?> "><!--Esse isset (if) faz sumir um erro 
                                                                                                                 de variavel indefinida --->
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                         <label> Celular: </label>
                     </div>
                     <div class="cadastroEntradaDeDados">
-                        <input type="tel" name="txtCelular" value="<?= isset($celular)? $celular: null?>"> <!--Esse isset (if) faz sumir um erro 
+                        <input type="tel" name="Celular" value="<?= isset($celular)? $celular: null?>"> <!--Esse isset (if) faz sumir um erro 
                                                                                                                 de variavel indefinida --->
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                         <label> Email: </label>
                     </div>
                     <div class="cadastroEntradaDeDados">
-                        <input type="email" name="txtEmail" value="<?= isset($email)? $email:null?>"> <!--Esse isset (if) faz sumir um erro 
+                        <input type="email" name="Email" value="<?= isset($email)? $email:null?>"> <!--Esse isset (if) faz sumir um erro 
                                                                                                             de variavel indefinida --->
                     </div>
                 </div>
@@ -136,17 +136,17 @@
                         <label> Escolha um arquivo</label>
                     </div>
                     <div class="cadastroEntradaDeDados">
-                        <input type="file" name="fleFoto" accept=".jpg, .png, .jpeg, .gif"> <!--- esse accept faz voce escolher qual 
+                        <input type="file" name="Foto" accept=".jpg, .png, .jpeg, .gif"> <!--- esse accept faz voce escolher qual 
                                                                                                     arquivo pode fazer o upload--->
-                </div>
-            </div>
+                   </div>
+               </div>
 
                 <div class="campos">
                     <div class="cadastroInformacoesPessoais">
                         <label> Observações: </label>
                     </div>
                     <div class="cadastroEntradaDeDados">
-                        <textarea name="txtObs" cols="50" rows="7"><?= isset($obs)? $obs:null ?></textarea> <!--Esse isset (if) faz sumir um erro
+                        <textarea name="Obs" cols="50" rows="7"><?= isset($obs)? $obs:null ?></textarea> <!--Esse isset (if) faz sumir um erro
                                                                                                                  de variavel indefinida --->
                     </div>
                 </div>
